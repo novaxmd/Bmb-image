@@ -8,17 +8,84 @@
 }
 
 body {
-  font-family: serif;
+  font-family: 'Orbitron', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: #081b29;
+  background: radial-gradient(circle at top, #010409, #020a15, #030f1e);
+  color: #e0e0e0;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
 }
 
+/* -------- MENU ICON (mistari mitatu) -------- */
+.top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: rgba(10, 10, 25, 0.7);
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 255, 255, 0.1);
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: inline-block;
+  width: 30px;
+  height: 22px;
+  position: relative;
+}
+
+.menu-icon span {
+  background: cyan;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  left: 0;
+  transition: all 0.3s;
+}
+
+.menu-icon span:nth-child(1) { top: 0; }
+.menu-icon span:nth-child(2) { top: 9px; }
+.menu-icon span:nth-child(3) { bottom: 0; }
+
+.menu-icon:hover span {
+  box-shadow: 0 0 8px cyan;
+}
+
+/* Sidebar for images */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 250px;
+  height: 100%;
+  background: rgba(0, 10, 20, 0.95);
+  color: #00ffff;
+  overflow-y: auto;
+  transition: left 0.3s ease;
+  z-index: 2000;
+  padding: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid cyan;
+  padding-bottom: 10px;
+}
+
+/* Gradient overlay */
 #gradient {
   position: fixed;
   top: 0;
@@ -35,32 +102,27 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 .logo-container {
   width: 100%;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .logo-image {
-  width: 200px; 
+  width: 200px;
   max-width: 90%;
   height: auto;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 15px rgba(0,255,255,0.4));
 }
 
 .logo-image:hover {
   transform: scale(1.05);
+  filter: drop-shadow(0 0 25px cyan);
 }
 
-
-.prompt-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-  width: 90%;
-}
-
+/* ------- INPUT ------- */
 .input-wrapper {
   position: relative;
   width: 90%;
@@ -71,151 +133,114 @@ body {
   width: 100%;
   padding: 15px 45px 15px 20px;
   font-size: 1rem;
-  border: 2px solid #fbc2eb;
+  border: 2px solid cyan;
   border-radius: 15px;
   outline: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0,255,255,0.2);
   transition: all 0.3s ease;
-  background: #fff9fb;
-  box-shadow: 0 4px 10px rgba(255, 192, 203, 0.2);
 }
 
 .input-wrapper input:focus {
-  border-color: #a18cd1;
-  box-shadow: 0 0 10px rgba(161, 140, 209, 0.5);
+  border-color: #00ffff;
+  box-shadow: 0 0 25px cyan;
 }
 
-.generate-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #a18cd1, #fbc2eb);
-  color: #fff;
+.clear-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: cyan;
   cursor: pointer;
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: 0.2s ease;
 }
 
-.generate-button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg, #fbc2eb, #a18cd1);
-}
-
-.image-container {
-  margin-top: 40px;
-  width: 90%;
-  max-width: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.generated-image {
-  max-width: 100%;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-}
-
-/* === BACKGROUND YA TEKNOLOJIA (nyeusi-bluu) === */
-body {
-  background: radial-gradient(circle at 20% 20%, #0a0f1f, #020305, #000);
-  color: #fff;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* === CANVAS YA BACKGROUND === */
-#techBackground {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background: radial-gradient(circle at 20% 20%, #0a0f1f, #020305, #000);
-  animation: techPulse 10s infinite alternate;
-}
-
-/* ANIMATION YA BACKGROUND */
-@keyframes techPulse {
-  0% { background: radial-gradient(circle at 20% 20%, #0a0f1f, #020305, #000); }
-  50% { background: radial-gradient(circle at 80% 80%, #041229, #010309, #000); }
-  100% { background: radial-gradient(circle at 20% 20%, #0a0f1f, #020305, #000); }
-}
-
-/* === MENU YA MISTARI MITATU === */
-.menu-icon {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 30px;
-  height: 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  z-index: 1000;
-}
-.menu-icon span {
-  display: block;
-  height: 4px;
-  border-radius: 2px;
-  background-color: #00b4ff;
-  transition: all 0.3s ease;
-}
-.menu-icon:hover span {
-  background-color: #1ae0ff;
-}
-
-/* === SIDEBAR YA KUHIFADHI PICHA === */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -280px;
-  width: 260px;
-  height: 100%;
-  background: rgba(5, 8, 18, 0.97);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 15px rgba(0, 180, 255, 0.3);
-  padding: 20px;
-  transition: left 0.4s ease;
-  z-index: 999;
+.clear-btn:hover {
   color: white;
-  overflow-y: auto;
+  text-shadow: 0 0 10px cyan;
 }
-.sidebar.active {
-  left: 0;
+
+/* ------- GENERATE BUTTON ------- */
+.generate-btn {
+  margin-top: 20px;
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  color: black;
+  background: linear-gradient(90deg, cyan, blue);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,255,255,0.4);
 }
-.sidebar h2 {
+
+.generate-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(0,255,255,0.8);
+}
+
+/* ------- IMAGE ------- */
+.image-container {
+  margin-top: 30px;
   text-align: center;
-  color: #00b4ff;
-  margin-bottom: 10px;
 }
-#savedImages img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
+
+.image-container img {
+  max-width: 90%;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
   transition: transform 0.3s ease;
 }
-#savedImages img:hover {
-  transform: scale(1.05);
+
+.image-container img:hover {
+  transform: scale(1.02);
 }
 
-/* === DOWNLOAD BUTTON CHINI YA PICHA === */
+/* ------- DOWNLOAD BUTTON ------- */
 .download-btn {
-  display: none;
-  background: linear-gradient(90deg, #007bff, #00b4ff);
-  color: white;
+  margin-top: 25px;
+  padding: 14px 35px;
+  font-size: 1rem;
   font-weight: bold;
+  color: white;
   border: none;
-  border-radius: 12px;
-  padding: 12px 25px;
-  font-size: 16px;
+  border-radius: 30px;
   cursor: pointer;
-  margin-top: 20px;
-  transition: all 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(90deg, #00ffff, #0088ff, #ff00ff, #00ffff);
+  background-size: 400% 400%;
+  animation: glowShift 5s infinite linear;
+  box-shadow: 0 0 25px rgba(0,255,255,0.5);
+  transition: transform 0.3s ease;
 }
+
 .download-btn:hover {
-  background: linear-gradient(90deg, #00b4ff, #007bff);
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 0 40px rgba(0,255,255,0.8);
+}
+
+@keyframes glowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ------- FOOTER ------- */
+.footer {
+  background: rgba(0, 0, 20, 0.9);
+  color: #00ffff;
+  text-align: center;
+  padding: 20px 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  width: 100%;
+  border-top: 1px solid rgba(0,255,255,0.3);
+  box-shadow: 0 -2px 15px rgba(0,255,255,0.2);
+  margin-top: 50px;
+  text-shadow: 0 0 10px cyan;
 }

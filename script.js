@@ -1,138 +1,111 @@
-const form = document.getElementById("imageForm");
-const imageContainer = document.getElementById("imageContainer");
-const loading = document.getElementById("loading");
-const promptInput = document.getElementById("prompt");
+const generateBtn = document.querySelector('.generate-btn');
+const promptInput = document.getElementById('promptInput');
+const imageContainer = document.getElementById('imageContainer');
+const popup = document.getElementById('popup');
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+// Sidebar menu toggler
+const menuIcon = document.querySelector('.menu-icon');
+const sidebar = document.querySelector('.sidebar');
+
+if (menuIcon && sidebar) {
+  menuIcon.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+  });
+}
+
+// Popup message
+function showPopup(message) {
+  popup.textContent = message;
+  popup.style.display = 'block';
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 3000);
+}
+
+// API 1: Pollinations
+function getPollinationsImageUrl(prompt) {
+  const base = "https://image.pollinations.ai/prompt/";
+  const params = new URLSearchParams({
+    width: 1080,
+    height: 1080,
+    nologo: "true",
+    private: "true",
+    seed: 42,
+    enhance: "true",
+    model: "flux-pro"
+  });
+  return `${base}${encodeURIComponent(prompt)}?${params.toString()}`;
+}
+
+// Generate Image
+generateBtn.addEventListener('click', async () => {
   const prompt = promptInput.value.trim();
-
   if (!prompt) {
-    alert("Please enter a description to generate an image.");
+    showPopup("Please enter a prompt!");
     return;
   }
 
-  imageContainer.innerHTML = "";
-  loading.style.display = "block";
+  imageContainer.innerHTML = `
+    <div class="generating-box">
+      <div class="sparkle">✨</div>
+      <div class="generating-text">Generating ...</div>
+      <div class="sparkle">✨</div>
+    </div>
+  `;
 
   try {
-    const response = await fetch("https://api.openai.com/v1/images/generations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-image-1",
-        prompt: prompt,
-        size: "512x512",
-      }),
-    });
+    const pollinationsUrl = getPollinationsImageUrl(prompt);
+    const pollinationsResponse = await fetch(pollinationsUrl);
 
-    const data = await response.json();
+    if (pollinationsResponse.ok) {
+      const blob = await pollinationsResponse.blob();
+      const imageUrl = URL.createObjectURL(blob);
 
-    if (data.data && data.data.length > 0) {
-      const imageUrl = data.data[0].url;
-      const img = document.createElement("img");
-      img.src = imageUrl;
-      img.classList.add("generated-image");
-      imageContainer.appendChild(img);
+      imageContainer.innerHTML = `
+        <img src="${imageUrl}" alt="Generated Image" id="generatedImage"/>
+        <button class="download-btn" id="downloadBtn">⬇️ Download Image</button>
+      `;
 
-      // Onyesha button ya download
-      const downloadBtn = document.getElementById("downloadBtn");
-      if (downloadBtn) {
-        downloadBtn.style.display = "inline-block";
-      }
-
-      // Hifadhi kwenye sidebar
-      const savedImagesDiv = document.getElementById("savedImages");
-      if (savedImagesDiv) {
-        const thumb = document.createElement("img");
-        thumb.src = imageUrl;
-        savedImagesDiv.prepend(thumb);
-      }
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.addEventListener('click', () => downloadImage(imageUrl));
+      return;
     } else {
-      alert("Failed to generate image. Please try again.");
+      throw new Error("Pollinations API failed.");
     }
-  } catch (error) {
-    console.error("Error generating image:", error);
-    alert("There was an error generating the image.");
-  } finally {
-    loading.style.display = "none";
+  } catch (err) {
+    console.warn("Pollinations failed:", err.message);
+  }
+
+  // Backup API: DuckMom
+  try {
+    const duckUrl = `https://imgen.duck.mom/prompt/${encodeURIComponent(prompt)}`;
+    const response = await fetch(duckUrl);
+
+    if (!response.ok) throw new Error("DuckMom API failed.");
+
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+
+    imageContainer.innerHTML = `
+      <img src="${imageUrl}" alt="Generated Image" id="generatedImage"/>
+      <button class="download-btn" id="downloadBtn">⬇️ Download Image</button>
+    `;
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', () => downloadImage(imageUrl));
+  } catch (err) {
+    console.warn("DuckMom API failed:", err.message);
+    imageContainer.innerHTML = "";
+    showPopup("Oops! Image generation failed.");
   }
 });
 
-/* ===============================
-   ✅ MABORESHO ULIOOMBA
-   =============================== */
-
-// Fungua / funga sidebar kupitia mistari mitatu
-const menuToggle = document.getElementById("menuToggle");
-const sidebar = document.getElementById("sidebar");
-
-if (menuToggle && sidebar) {
-  menuToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-  });
-}
-
-// Download Image Button
-const downloadBtn = document.getElementById("downloadBtn");
-
-if (downloadBtn) {
-  downloadBtn.addEventListener("click", () => {
-    const img = imageContainer.querySelector("img");
-    if (img) {
-      const link = document.createElement("a");
-      link.href = img.src;
-      link.download = "generated_image.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  });
-}
-
-// Background canvas effect (moving lights)
-const canvas = document.getElementById("techBackground");
-if (canvas) {
-  const ctx = canvas.getContext("2d");
-  let w, h, particles = [];
-
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  window.addEventListener("resize", resize);
-  resize();
-
-  function createParticles() {
-    particles = [];
-    for (let i = 0; i < 40; i++) {
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 2 + 1,
-        dx: (Math.random() - 0.5) * 0.6,
-        dy: (Math.random() - 0.5) * 0.6,
-      });
-    }
-  }
-  createParticles();
-
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "#00b4ff";
-    for (let p of particles) {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-      p.x += p.dx;
-      p.y += p.dy;
-      if (p.x < 0 || p.x > w) p.dx *= -1;
-      if (p.y < 0 || p.y > h) p.dy *= -1;
-    }
-    requestAnimationFrame(draw);
-  }
-  draw();
+// Download function
+function downloadImage(url) {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'Bmb-Ai-Image.png';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

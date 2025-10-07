@@ -32,6 +32,23 @@
 <meta name="theme-color" content="#7a5fff">
 </head>
 <body>
+    
+    <!-- ✅ Teknolojia Background -->
+    <canvas id="techBackground"></canvas>
+
+    <!-- ✅ Menu ya Mistari Mitatu -->
+    <div class="menu-icon" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- ✅ Sidebar ya Picha Zilizohifadhiwa -->
+    <aside class="sidebar" id="sidebar">
+        <h2>Generated Images</h2>
+        <div id="savedImages"></div>
+    </aside>
+
     <div id="gradient"></div>
 <div class="main-content">
 
@@ -60,61 +77,28 @@
   🌟 Wanna Explore My More Projects?
 </a>
   </div>
-    
 </div>
-    
-    
-    <div class="logo-container">
+
+<div class="logo-container">
   <img src="dev/bmb.png" alt="Bmb AI Logo" class="logo-image" />
 </div>
-    <div class="prompt-section">
+
+<div class="prompt-section">
   <div class="input-wrapper">
     <input type="text" id="promptInput" placeholder="Enter your imagination..." />
     <span class="clear-btn" onclick="document.getElementById('promptInput').value = '';">×</span>
   </div>
-  <button class="generate-btn">✨ Generate</button>
-</div>
-    <div class="image-container" id="imageContainer"></div>
-
-    <!--
-    <button class="download-btn" id="downloadBtn" style="display: none;">⬇️ Download Image</button>
-    -->
-<div id="popup" class="popup">Please enter a prompt!</div>
-    
+  <button class="generate-btn" id="generateBtn">✨ Generate</button>
 </div>
 
-    
-    <footer class="footer">
-  <div class="footer-content">
-    <p>🌟 Powered by <strong>Bmb Ai</strong> — Your AI buddy</p>
-    <p>🎨 Designed & Created with 💖 by <strong>developer</strong></p>
-  </div>
-</footer>
-    <script>
-  const infoBtn = document.getElementById("infoBtn");
-  const overlay = document.getElementById("overlay");
-  const closeBtn = document.getElementById("closeBtn");
+<div class="image-container" id="imageContainer"></div>
 
-  infoBtn.addEventListener("click", () => {
-    overlay.classList.add("active");
-  });
+<!-- ✅ Download Button -->
+<button class="download-btn" id="downloadBtn" style="display:none;">⬇️ Download Image</button>
 
-  function closeOverlay() {
-    overlay.classList.remove("active");
-  }
-
-  closeBtn.addEventListener("click", closeOverlay);
-
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      closeOverlay();
-    }
-  });
-</script>
-    
+<!-- ✅ Scripts -->
 <script src="background.js"></script>
- 
-    <script src="script.js"></script>
-    
+<script src="script.js"></script>
+
 </body>
 </html>

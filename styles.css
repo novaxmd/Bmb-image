@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: #081b29;
+  background-color: #000000; /* nyeusi kamili */
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
@@ -26,6 +26,7 @@ body {
   width: 100%;
   height: 100%;
   z-index: -3;
+  background: linear-gradient(135deg, #000000, #0a0a0a); /* nyeusi laini kidogo */
 }
 
 .main-content {
@@ -35,6 +36,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
 .logo-container {
   width: 100%;
   text-align: center;
@@ -51,7 +53,6 @@ body {
 .logo-image:hover {
   transform: scale(1.05);
 }
-
 
 .prompt-section {
   display: flex;
@@ -108,17 +109,17 @@ body {
   font-weight: bold;
   font-family: 'Orbitron', sans-serif;
   color: white;
-  background: linear-gradient(135deg, #f6d365, #fda085);
+  background: linear-gradient(135deg, #333333, #000000); /* badilishwa kuwa nyeusi gradient */
   border: none;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(253, 160, 133, 0.4);
+  box-shadow: 0 6px 20px rgba(50, 50, 50, 0.6);
 }
 
 .generate-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(253, 160, 133, 0.6);
+  box-shadow: 0 10px 25px rgba(50, 50, 50, 0.8);
 }
 
 .image-container {
@@ -129,7 +130,7 @@ body {
 .image-container img {
   max-width: 90%;
   border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .popup {
@@ -151,6 +152,7 @@ body {
   from { opacity: 0; top: 0; }
   to { opacity: 1; top: 20px; }
 }
+
 .generating-box {
   display: flex;
   justify-content: center;
@@ -159,16 +161,17 @@ body {
   font-family: 'Poppins', sans-serif;
   font-size: 1.2rem;
   font-weight: 500;
-  color: #ff9a9e;
+  color: #cccccc;
   margin-top: 20px;
   animation: pulseText 1.5s ease-in-out infinite;
 }
 
 .generating-text {
-  background: linear-gradient(90deg, #f7971e, #ffd200, #ff6a00, #ffb347);
+  background: linear-gradient(90deg, #888888, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .sparkle {
   font-size: 1.5rem;
   animation: sparkleTwinkle 1s infinite alternate;
@@ -184,47 +187,21 @@ body {
   100% { opacity: 1; transform: rotate(20deg) scale(1.2); }
 }
 
-/*
-.download-btn {
-  margin-top: 20px;
-  padding: 12px 28px;
-  font-size: 1rem;
-  font-weight: bold;
-  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(161, 196, 253, 0.5);
-  transition: all 0.3s ease;
-  font-family: 'Poppins', sans-serif;
-}
-
-.download-btn:hover {
-  background: linear-gradient(135deg, #ffecd2, #fcb69f);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 12px 25px rgba(252, 182, 159, 0.6);
-}
-*/
-
 .info-btn {
   position: fixed;
   top: 15px;
   left: 15px;
-  
   padding: 10px 12px;
   font-size: 24px;
   border-radius: 50%;
   cursor: pointer;
- 
   transition: transform 0.3s ease, background 0.3s;
   z-index: 1000;
-  color: black;
+  color: white;
 }
 
 .info-btn:hover {
   transform: scale(1.2) rotate(10deg);
-  
 }
 
 .overlay {
@@ -250,19 +227,18 @@ body {
 }
 
 .info-box {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(20, 20, 20, 0.9);
   padding: 25px 30px;
   border-radius: 20px;
   color: white;
   width: 90%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 0 20px #fff4;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   position: relative;
   animation: fadeInUp 0.4s ease forwards;
-  backdrop-filter: blur(10px);        
-  -webkit-backdrop-filter: blur(16px); 
-  border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 @keyframes fadeInUp {
@@ -282,13 +258,11 @@ body {
 .info-box h2 {
   font-family: 'Cherry Bomb One', cursive;
   font-size: 2rem;
-  background: linear-gradient(90deg, #ff9a9e, #fad0c4, #a1c4fd);
+  background: linear-gradient(90deg, #cccccc, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 15px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
 
 .info-box ul li {
   font-family: 'Nunito Sans', sans-serif;
@@ -313,14 +287,12 @@ body {
   to   { opacity: 1; transform: scale(1.2); }
 }
 
-
 .info-box hr {
   border: 0;
   height: 1px;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.2);
   margin: 20px 0;
 }
-
 
 .info-box p {
   font-family: 'Nunito Sans', sans-serif;
@@ -331,17 +303,14 @@ body {
 .info-box p strong {
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(90deg, #ffe259, #ffa751);
+  background: linear-gradient(90deg, #aaaaaa, #ffffff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-
-
-
 .footer {
   backdrop-filter: blur(12px);
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(10, 10, 25, 0.8));
+  background: linear-gradient(135deg, #000000, #0a0a0a);
   color: #ffffff;
   text-align: center;
   padding: 20px 0;
@@ -353,36 +322,24 @@ body {
   margin-top: 50px;
 }
 
-
 .footer-content p {
   margin: 4px 0;
   letter-spacing: 1px;
-  text-shadow: 0 0 2px #00ffff, 0 0 5px #00ffff60;
-}
-
-@keyframes glowFooter {
-  0% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  text-shadow: 0 0 2px #fff, 0 0 5px #ffffff60;
 }
 
 .explore-btn {
   display: inline-block;
   margin-top: 20px;
   padding: 12px 25px;
-  background: linear-gradient(135deg, #00f5a0, #00d9f5);
-  color: crimson;
+  background: linear-gradient(135deg, #222222, #000000);
+  color: white;
   font-family: 'Orbitron', sans-serif;
   font-weight: bold;
   text-decoration: none;
   font-size: 14px;
   border-radius: 30px;
-  box-shadow: 0 8px 16px rgba(0, 245, 160, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -406,5 +363,5 @@ body {
 
 .explore-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 245, 160, 0.4);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
 }

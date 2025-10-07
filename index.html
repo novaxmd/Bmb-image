@@ -1,95 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bmb-Ai Image Generator</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lugrasimo">
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bmb-Ai Image Generator</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lugrasimo">
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="description" content="Bmb Ai - A Magical Tool To Instantly Generate Beautiful AI-Based Images With Just A Click. Simple. Fast. Powerful.">
+  <meta itemprop="name" content="Bmb Ai">
+  <meta itemprop="description" content="Bmb Ai - Generate AI Images With Aesthetic UI And One-Click Download. Designed To Be Minimal, Powerful And Unique.">
+  <meta itemprop="image" content="dev/bmb.png">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta content="Bmb Ai" property="og:site_name">
+  <meta property="og:type" content="website">
+  <meta content="https://Bmb-Ai.vercel.app" property="og:url">
+  <meta content="Bmb Ai - Generate Stunning AI Images" property="og:title">
+  <meta content="dev/bmb.png" property="og:image">
+  <meta content="Welcome To Bmb Ai — A Cool AI-Powered Web App That Lets You Create And Download Images In Seconds." property="og:description">
+  <meta name="author" content="Bmb Ai By nova">
+  <meta name="keywords" content="Bmb Ai, AI Image Generator, Web App, Instant Images, Pollination AI, Frontend, Backend">
+  <meta name="theme-color" content="#7a5fff">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Background - nyeusi si nyeusi, bluu si bluu */
+    body {
+      background: linear-gradient(135deg, #020b16, #041b2d, #000814);
+      min-height: 100vh;
+      color: white;
+    }
 
-    <meta name="description" content="Bmb Ai - Generate AI Images With Style">
-    <meta name="theme-color" content="#001F3F">
+    /* Image container & Download button */
+    .image-container {
+      margin-top: 40px;
+      text-align: center;
+      position: relative;
+    }
+
+    .image-container img {
+      max-width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .download-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      font-weight: bold;
+      background: linear-gradient(270deg, #00f5a0, #00d9f5, #f6d365, #fda085);
+      background-size: 400% 400%;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 245, 160, 0.4);
+      transition: transform 0.3s ease;
+      animation: gradientShift 5s ease infinite;
+    }
+
+    .download-btn:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Background ya teknolojia -->
-    <canvas id="techBackground"></canvas>
-
-    <!-- Mistari mitatu juu kushoto -->
-    <header class="top-bar">
-      <div class="menu-icon" id="menuToggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <h1 class="app-title">Bmb Ai Image Generator</h1>
-    </header>
-
-    <!-- Sidebar ya kuhifadhi picha -->
-    <aside class="sidebar" id="sidebar">
-      <h2>Generated Images</h2>
-      <div id="savedImages"></div>
-    </aside>
-
-    <div id="gradient"></div>
-
-    <div class="main-content">
-
-      <div class="info-btn" id="infoBtn">
-        <i class='bx bx-info-circle'></i>
-      </div>
-
-      <div class="overlay" id="overlay">
-        <div class="info-box">
-          <span class="close-btn" id="closeBtn">&times;</span>
-          <h2>About Bmb Ai</h2>
-          <ul>
-            <li>⚡ Fast and easy to use</li>
-            <li>🖼️ HD quality images</li>
-            <li>⬇️ Instant image download support</li>
-            <li>🧠 Smart prompt handling</li>
-            <li>💖 Designed with love</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="logo-container">
-        <img src="dev/bmb.png" alt="Bmb AI Logo" class="logo-image" />
-      </div>
-
-      <div class="prompt-section">
-        <div class="input-wrapper">
-          <input type="text" id="promptInput" placeholder="Enter your imagination..." />
-          <span class="clear-btn" onclick="document.getElementById('promptInput').value = '';">×</span>
-        </div>
-        <button class="generate-btn">✨ Generate</button>
-      </div>
-
-      <div class="image-container" id="imageContainer"></div>
-
-      <!-- Download button yenye mwanga unaozunguka -->
-      <button class="download-btn" id="downloadBtn" style="display: none;">
-        ⬇️ Download Image
-      </button>
-
-      <div id="popup" class="popup">Please enter a prompt!</div>
+  <div id="gradient"></div>
+  <div class="main-content">
+    <div class="info-btn" id="infoBtn">
+      <i class='bx bx-info-circle'></i>
     </div>
 
-    <footer class="footer">
-      <div class="footer-content">
-        <p>🌟 Powered by <strong>Bmb Ai</strong> — Your AI buddy</p>
-        <p>🎨 Designed & Created with 💖 by <strong>developer</strong></p>
+    <div class="overlay" id="overlay">
+      <div class="info-box">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <h2>About Bmb Ai</h2>
+        <ul>
+          <li>⚡ Fast and easy to use</li>
+          <li>🖼️ HD quality anime-style images</li>
+          <li>⬇️ Instant image download support</li>
+          <li>🧠 Smart prompt handling with kawaii results</li>
+          <li>🛡️ Anti-NSFW safe environment</li>
+          <li>💖 Designed with love & cuteness in mind</li>
+          <li>📱 Fully responsive on all devices</li>
+        </ul>
+        <hr />
+        <p><strong>👩‍🎨 Powered by:</strong> Anime Image Generator Model</p>
+        <p><strong>🌐 Hosting:</strong> Vercel with blazing speed</p>
+        <p><strong>👨‍💻 Developer:</strong> nova</p>
+        <a href="https://murali.vercel.app/Projects/index.html" class="explore-btn">
+          🌟 Wanna Explore My More Projects?
+        </a>
       </div>
-    </footer>
+    </div>
 
-    <script src="background.js"></script>
-    <script src="script.js"></script>
+    <div class="logo-container">
+      <img src="dev/bmb.png" alt="Bmb AI Logo" class="logo-image" />
+    </div>
+
+    <div class="prompt-section">
+      <div class="input-wrapper">
+        <input type="text" id="promptInput" placeholder="Enter your imagination..." />
+        <span class="clear-btn" onclick="document.getElementById('promptInput').value = '';">×</span>
+      </div>
+      <button class="generate-btn" id="generateBtn">✨ Generate</button>
+    </div>
+
+    <div class="image-container" id="imageContainer">
+      <img id="generatedImage" src="" alt="" style="display:none;">
+      <button class="download-btn" id="downloadBtn" onclick="downloadImage()">⬇️ Download Image</button>
+    </div>
+
+    <div id="popup" class="popup">Please enter a prompt!</div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>🌟 Powered by <strong>Bmb Ai</strong> — Your AI buddy</p>
+      <p>🎨 Designed & Created with 💖 by <strong>developer</strong></p>
+    </div>
+  </footer>
+
+  <script>
+    const infoBtn = document.getElementById("infoBtn");
+    const overlay = document.getElementById("overlay");
+    const closeBtn = document.getElementById("closeBtn");
+    const generateBtn = document.getElementById("generateBtn");
+    const image = document.getElementById("generatedImage");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    infoBtn.addEventListener("click", () => overlay.classList.add("active"));
+    closeBtn.addEventListener("click", () => overlay.classList.remove("active"));
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.classList.remove("active"); });
+
+    generateBtn.addEventListener("click", () => {
+      const prompt = document.getElementById("promptInput").value.trim();
+      const popup = document.getElementById("popup");
+
+      if (!prompt) {
+        popup.style.display = "block";
+        setTimeout(() => (popup.style.display = "none"), 2000);
+        return;
+      }
+
+      image.src = `https://picsum.photos/600/400?random=${Math.floor(Math.random() * 1000)}`;
+      image.style.display = "block";
+
+      image.onload = () => {
+        downloadBtn.style.display = "inline-block";
+      };
+    });
+
+    function downloadImage() {
+      const link = document.createElement("a");
+      link.href = image.src;
+      link.download = "BmbAI_Image.jpg";
+      link.click();
+    }
+  </script>
+
+  <script src="background.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
